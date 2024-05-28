@@ -2,16 +2,12 @@ import streamlit as st
 import plotly.graph_objects as go
 from googleapiclient.discovery import build
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-
 import re
 from wordcloud import WordCloud
 
 
 API_KEY = st.secrets["default"]['API_KEY'] 
 youtube = build('youtube', 'v3', developerKey=API_KEY)
-
-
-
 
 def extract_video_id(url):
     pattern = r'(?:https?://)?(?:www\.)?(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})'
