@@ -1,0 +1,85 @@
+commenting for better reach
+god level content 🔥🔥🔥
+thank you sir.
+seriously you are the bestttttttttttttt... your teaching skills and the way you had put an effort for us like no one can explain better than you, and now i am just loving this to learn. thank you so much for making it easy for me, like seriously i have become your biggest fan..
+legendary stuff
+error : 
+in the update_parameters function,  
+for updating w1 matrix -> the updated values of w2 are being used. 
+apparently, in the rhs,  the values of w2, which are used during forward propagation should be used right ?
+so, what i mean to say is, we need to store the parameters used in forward propagation (as a cache) and use them while updating the required parameters during back propagation
+sir the level of depth you are went really made the  learning 200% more effective thank you for making these videos
+can any one explain why we have taken a transpose with weights  in
+def linear_forward(a_prev, w , b):
+ <---------------- z = np.dot(w.t , a_prev) + b ----------------->>>>>>>
+  a = sigmoid(z=z)
+  return a
+can anyone please explain what expression is used while deriving del(y_hat)/del(z) so that the answer was sigma(z)[1-sigma(z)]
+god level bhai ❤️💯
+no doubt ,you are a legend💌
+hello sir.
+
+the update_parameters() should be as follows:
+
+def update_parameters(parameters, y, y_hat, a1, x):
+    
+    # w2 refers to weights going into layer 2
+    parameters['w2'][0][0] = parameters['w2'][0][0] + (0.001 * 2 * (y - y_hat) * a1[0][0])
+    parameters['w2'][1][0] = parameters['w2'][1][0] + (0.001 * 2 * (y - y_hat) * a1[1][0])
+    parameters['b2'][0][0] = parameters['b2'][0][0] + (0.001 * 2 * (y - y_hat))
+    
+    # w1 refers to weights going to layer 1
+    parameters['w1'][0][0] = parameters['w1'][0][0] + (0.001 * 2 * (y - y_hat) * parameters['w2'][0][0] * x[0][0])
+    parameters['w1'][1][0] = parameters['w1'][1][0] + (0.001 * 2 * (y - y_hat) * parameters['w2'][0][0] * x[1][0])
+    parameters['b1'][0][0] = parameters['b1'][0][0] + (0.001 * 2 * (y - y_hat) * parameters['w2'][0][0])
+    parameters['w1'][0][1] = parameters['w1'][0][1] + (0.001 * 2 * (y - y_hat) * parameters['w2'][1][0] * x[0][0])
+    parameters['w1'][1][1] = parameters['w1'][1][1] + (0.001 * 2 * (y - y_hat) * parameters['w2'][1][0] * x[1][0])
+    parameters['b1'][1][0] = parameters['b1'][1][0] + (0.001 * 2 * (y - y_hat) * parameters['w2'][1][0])
+sir please provide the notebooks.
+i am getting the following error during the back propagation: keyerror: 'the optimizer cannot recognize variable conv1d/kernel:0. this usually means you are trying to call the optimizer to update different parts of the model separately. please call `optimizer.build(variables)` with the full list of trainable variables before the training loop or use legacy optimizer `tf.keras.optimizers.legacy.adam.' 
+kindly let me know the solotion.
+thank you so much bhi
+great work
+kya sir last me bola ki sath me karo 😂😂😂😂
+sir please ye note book b share ker liya ker
+hey u hav took wrong formula of mean square error.....it is square root of (y-y^)2  .....i. e   mse =√((y-y^)^2)
+best, hats off sir <3
+i saw when the 67.9 subscribers changed to 68. it's amazing. congratulations, thank you for your amazing job.
+excellent , keep it up sir
+amazing nitish, you're truly a gem.
+yes sir practice will make our concept more cleared thnk you sir for this
+good content, great explanation and an exceptionally gifted teacher. learning is truly made enjoyable by your videos. thank you for your hard work and clear teaching nitish sir.
+the kind of effort u put in making people understand all the concepts thoroughly can be clearly seen...this channel will have millions of subscribers very soon...
+nice and informative video. code is also good yet a bit lengthy.
+than you for this amazing dl series.
+finished watching
+you are gem sir.
+thank you
+there's a small mistake i found in your code for backprop-classification: under the update_parameters function on line 3 the code should be "parameters['b2'][0][0] = parameters['b2'][0][0] + (0.0001 * (y - y_hat))" instead of "parameters['b2'][0][0] = parameters['w2'][1][0] + (0.0001 * (y - y_hat))". great work though!
+sir how will this work for a 3 or more layer ?
+awesome
+can you please share this onenote notebook? that would better spread your tremendous effort. great lectures !!!!
+sir , you  totally know how to teach the student... no one taking a much hard word as you are taking .. i seen many vedios but they
+just explaing the concept  .. but you are teching in full details with algorithms..!  thank a lot!!
+great content
+thanks sir
+while executing this--->optimizer=keras.optimizers.adam(learning_rate=0.001)
+model.compile(loss='mean_squared_error',optimizer=optimizer)    i got the error saying     'could not interpret optimizer identifier: {}'.format(identifier))
+
+valueerror: could not interpret optimizer identifier: <tensorflow.python.keras.optimizer_v2.adam.adam object at 0x0000024991bd8790>
+please help me.....
+honestly speaking i was a bit frustrated when you said you will not come back. i saw a lot of teachers in the youtube world believe me your teaching style is amazing. i always follow you on linkedin and also on youtube. 
+thanks a lot if possible please stay with us at least when you get a bit of free time. thanks a lot.
+amazing tutorial. please continue this series
+sir a person doing only data analytics can become data scientist in future ?? i mean in a way of promotion ??
+back in game 😂
+so much happy to see u again... 😇😇😇
+wait... was that an april fool...
+are ap aa gyaaa🤣🤩😍🤭
+good to see you back
+welcome sir again on youtube..
+time series analysis please 😭
+perhaps the most awaited video of yours.. after an iconic prank :p
+thank you sir🙏
+thankyou bro 🙏...nlp ka bhi wait kar rhe ....
+good to see you back, bhaiya. after a beautiful prank!
