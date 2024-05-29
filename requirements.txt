@@ -4,3 +4,4 @@ google-api-python-client==2.122.0
 vaderSentiment==3.3.2
 wordcloud==1.9.3
 nltk==3.8.1
+scikit-learn==1.2.2

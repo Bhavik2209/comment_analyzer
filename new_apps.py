@@ -10,8 +10,8 @@ from googleapiclient.errors import HttpError
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # Load saved model and vectorizer
-lr = joblib.load(r'C:\Users\SVI\Desktop\youtube\logistic_regression_model.pkl')
-tfidf = joblib.load(r'C:\Users\SVI\Desktop\youtube\tfidf_vectorizer.pkl')
+lr = joblib.load('logistic_regression_model.pkl')
+tfidf = joblib.load('tfidf_vectorizer.pkl')
 
 # Ensure NLTK data is downloaded
 nltk.download('punkt')
