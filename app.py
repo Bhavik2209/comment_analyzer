@@ -71,8 +71,8 @@ def generate_word_cloud(comments):
 
 def main():
     st.title('YouTube Comment Sentiment Analysis')
-    st.subheader('Enter YouTube Video ID:')
-    url = st.text_input("Enter YouTube URL: ")
+    st.subheader('Enter YouTube Video URL:')
+    url = st.text_input()
     video_id = extract_video_id(url)
     if st.button('Analyze'):
         if video_id:
@@ -82,7 +82,7 @@ def main():
             st.write(f'Average Polarity: {avg_polarity}')
             if avg_polarity > 0.05:
                 st.write('The Video has got a Positive response')
-            elif avg_polarity < -0.05:
+            elif avg_polarity < 0:
                 st.write('The Video has got a Negative response')
             else:
                 st.write('The Video has got a Neutral response')
@@ -91,7 +91,8 @@ def main():
             st.subheader('Word Cloud of Comments')
             wordcloud = generate_word_cloud(comments)
             st.image(wordcloud.to_array(), use_column_width=True)
-
+            st.write(positive_comments[:5])
+            st.write(negative_comments[:5])
             # Plot sentiment analysis
             fig = go.Figure(data=[go.Bar(x=['Positive', 'Negative', 'Neutral'],
                                          y=[len(positive_comments), len(negative_comments), len(neutral_comments)],
