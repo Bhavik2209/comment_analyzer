@@ -13,9 +13,9 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 lr = joblib.load('logistic_regression_model.pkl')
 tfidf = joblib.load('tfidf_vectorizer.pkl')
 
+# Ensure NLTK data is downloaded
 import nltk
 nltk.download('wordnet')
-# Ensure NLTK data is downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
 
@@ -58,7 +58,7 @@ def fetch_comments(video_id):
     try:
         comments = []
         nextPageToken = None
-        max_comments = 200
+        max_comments = 2000
         fetched_comments = 0
         while True:
             response = youtube.commentThreads().list(
