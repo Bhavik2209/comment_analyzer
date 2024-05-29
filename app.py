@@ -13,6 +13,8 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 lr = joblib.load('logistic_regression_model.pkl')
 tfidf = joblib.load('tfidf_vectorizer.pkl')
 
+import nltk
+nltk.download('wordnet')
 # Ensure NLTK data is downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
