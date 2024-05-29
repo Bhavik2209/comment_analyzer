@@ -91,8 +91,16 @@ def main():
             st.subheader('Word Cloud of Comments')
             wordcloud = generate_word_cloud(comments)
             st.image(wordcloud.to_array(), use_column_width=True)
-            st.write(positive_comments[:5])
-            st.write(negative_comments[:5])
+            # Display top 5 positive comments
+            st.subheader('Top 5 Positive Comments')
+            for i, comment in enumerate(positive_comments[:5], 1):
+                st.write(f"{i}. {comment}")
+
+            # Display top 5 negative comments
+            st.subheader('Top 5 Negative Comments')
+            for i, comment in enumerate(negative_comments[:5], 1):
+                st.write(f"{i}. {comment}")
+                
             # Plot sentiment analysis
             fig = go.Figure(data=[go.Bar(x=['Positive', 'Negative', 'Neutral'],
                                          y=[len(positive_comments), len(negative_comments), len(neutral_comments)],
