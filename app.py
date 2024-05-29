@@ -1,6 +1,7 @@
 import streamlit as st
 import plotly.graph_objects as go
 from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import re
 from wordcloud import WordCloud
@@ -18,30 +19,34 @@ def extract_video_id(url):
         return None
 
 def fetch_comments(video_id):
-    comments = []
-    nextPageToken = None
-    max_comments = 200
-    fetched_comments = 0
-    while True:
-        response = youtube.commentThreads().list(
-            part='snippet',
-            videoId=video_id,
-            maxResults=100,
-            pageToken=nextPageToken
-        ).execute()
+    try:
+        comments = []
+        nextPageToken = None
+        max_comments = 200
+        fetched_comments = 0
+        while True:
+            response = youtube.commentThreads().list(
+                part='snippet',
+                videoId=video_id,
+                maxResults=100,
+                pageToken=nextPageToken
+            ).execute()
 
-        for item in response['items']:
-            comment = item['snippet']['topLevelComment']['snippet']['textOriginal']
-            comments.append(comment)
-            fetched_comments += 1
-            if fetched_comments >= max_comments:
+            for item in response['items']:
+                comment = item['snippet']['topLevelComment']['snippet']['textOriginal']
+                comments.append(comment)
+                fetched_comments += 1
+                if fetched_comments >= max_comments:
+                    break
+
+            nextPageToken = response.get('nextPageToken')
+            if not nextPageToken:
                 break
 
-        nextPageToken = response.get('nextPageToken')
-        if not nextPageToken:
-            break
-
-    return comments
+        return comments
+    except HttpError as e:
+        st.error(f"An error occurred: {e}")
+        return []
 
 def analyze_sentiment(comments):
     analyzer = SentimentIntensityAnalyzer()
@@ -67,57 +72,58 @@ def generate_word_cloud(comments):
     wordcloud = WordCloud(width=800, height=400, background_color='white').generate(text)
     return wordcloud
 
-
-
 def main():
     st.title('YouTube Comment Sentiment Analysis')
     st.subheader('Enter YouTube Video URL:')
-    url = st.text_input("enter the URL :")
+    url = st.text_input("Enter the URL:")
     video_id = extract_video_id(url)
     if st.button('Analyze'):
         if video_id:
             comments = fetch_comments(video_id)
-            polarities, positive_comments, negative_comments, neutral_comments = analyze_sentiment(comments)
-            avg_polarity = sum(polarities) / len(polarities)
-            st.write(f'Average Polarity: {avg_polarity}')
-            if avg_polarity > 0.05:
-                st.write('The Video has got a Positive response')
-            elif avg_polarity < 0:
-                st.write('The Video has got a Negative response')
-            else:
-                st.write('The Video has got a Neutral response')
+            if comments:
+                polarities, positive_comments, negative_comments, neutral_comments = analyze_sentiment(comments)
+                avg_polarity = sum(polarities) / len(polarities)
+                st.write(f'Average Polarity: {avg_polarity}')
+                if avg_polarity > 0.05:
+                    st.write('The Video has got a Positive response')
+                elif avg_polarity < 0:
+                    st.write('The Video has got a Negative response')
+                else:
+                    st.write('The Video has got a Neutral response')
 
-            # Display word cloud
-            st.subheader('Word Cloud of Comments')
-            wordcloud = generate_word_cloud(comments)
-            st.image(wordcloud.to_array(), use_column_width=True)
-            # Display top 5 positive comments
-            st.subheader('Top 5 Positive Comments')
-            for i, comment in enumerate(positive_comments[:5], 1):
-                st.write(f"{i}. {comment}")
-
-            # Display top 5 negative comments
-            st.subheader('Top 5 Negative Comments')
-            for i, comment in enumerate(negative_comments[:5], 1):
-                st.write(f"{i}. {comment}")
+                # Display word cloud
+                st.subheader('Word Cloud of Comments')
+                wordcloud = generate_word_cloud(comments)
+                st.image(wordcloud.to_array(), use_column_width=True)
                 
-            # Plot sentiment analysis
-            fig = go.Figure(data=[go.Bar(x=['Positive', 'Negative', 'Neutral'],
-                                         y=[len(positive_comments), len(negative_comments), len(neutral_comments)],
-                                         marker=dict(color=['green', 'red', 'grey']))])
-            fig.update_layout(title='Sentiment Analysis of Comments', xaxis_title='Sentiment',
-                              yaxis_title='Comment Count')
-            st.plotly_chart(fig)
+                # Display top 5 positive comments
+                st.subheader('Top 5 Positive Comments')
+                for i, comment in enumerate(positive_comments[:5], 1):
+                    st.write(f"{i}. {comment}")
 
-            # Plot sentiment analysis pie chart
-            fig_pie = go.Figure(data=[go.Pie(labels=['Positive', 'Negative', 'Neutral'],
-                                             values=[len(positive_comments), len(negative_comments),
-                                                     len(neutral_comments)])])
-            fig_pie.update_layout(title='Sentiment Analysis Pie Chart')
-            st.plotly_chart(fig_pie)
+                # Display top 5 negative comments
+                st.subheader('Top 5 Negative Comments')
+                for i, comment in enumerate(negative_comments[:5], 1):
+                    st.write(f"{i}. {comment}")
+                    
+                # Plot sentiment analysis
+                fig = go.Figure(data=[go.Bar(x=['Positive', 'Negative', 'Neutral'],
+                                             y=[len(positive_comments), len(negative_comments), len(neutral_comments)],
+                                             marker=dict(color=['green', 'red', 'grey']))])
+                fig.update_layout(title='Sentiment Analysis of Comments', xaxis_title='Sentiment',
+                                  yaxis_title='Comment Count')
+                st.plotly_chart(fig)
+
+                # Plot sentiment analysis pie chart
+                fig_pie = go.Figure(data=[go.Pie(labels=['Positive', 'Negative', 'Neutral'],
+                                                 values=[len(positive_comments), len(negative_comments),
+                                                         len(neutral_comments)])])
+                fig_pie.update_layout(title='Sentiment Analysis Pie Chart')
+                st.plotly_chart(fig_pie)
+            else:
+                st.write("Currently, the service is not available. Please try again later.")
         else:
-            st.write("Give valid URL")
+            st.write("Please enter a valid URL.")
 
 if __name__ == '__main__':
-    
     main()
