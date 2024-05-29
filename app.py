@@ -72,7 +72,7 @@ def generate_word_cloud(comments):
 def main():
     st.title('YouTube Comment Sentiment Analysis')
     st.subheader('Enter YouTube Video URL:')
-    url = st.text_input()
+    url = st.text_input("enter the URL :")
     video_id = extract_video_id(url)
     if st.button('Analyze'):
         if video_id:
