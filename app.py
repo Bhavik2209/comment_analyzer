@@ -147,9 +147,9 @@ def main():
 
                 avg_polarity = sum(polarities) / len(polarities)
                 st.write(f'Average Polarity: {avg_polarity}')
-                if avg_polarity > 0.05:
+                if (avg_polarity > 0.05 and len(positive_comments_vader)>len(negative_comments_vader)):
                     st.write('The Video has got a Positive response')
-                elif avg_polarity < 0:
+                elif (len(positive_comments_vader)<len(negative_comments_vader)):
                     st.write('The Video has got a Negative response')
                 else:
                     st.write('The Video has got a Neutral response')
